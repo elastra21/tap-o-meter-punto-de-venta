@@ -17,25 +17,30 @@
 </template>
 
 <script>
-export default {
-  name: "Confirmation",
-  data: () => ({
-    visible: false,
-  }),
-  props: {
-    onClose: Function,
-    dialog: Boolean,
-    msg_data: Object,
-  },
-  methods: {
-    handleClose(value) {
-      this.onClose(value);
+  export default {
+    name: "Confirmation",
+    props: {
+      onClose: Function,
+      dialog: Boolean,
+      msg_data: Object,
     },
-  },
-  watch: {
-    dialog: function (newVal, oldVal) {
-      this.visible = newVal;
+    data: () => ({
+      visible: false,
+    }),
+    watch: {
+      dialog: function (newVal, oldVal) {
+        this.visible = newVal
+      },
+      visible: function (newVal, oldVal) {
+        if (this.dialog && !newVal) {
+          this.onClose(false)
+        }
+      },
     },
-  },
-}
+    methods: {
+      handleClose(value) {
+        this.onClose(value)
+      },
+    },
+  }
 </script>
